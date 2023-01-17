@@ -1,4 +1,4 @@
-import { Sequelize } from 'sequelize';
+const Sequelize = require('sequelize');
 
 const newSeq = new Sequelize(
     process.env.DATABASE_NAME,
@@ -8,7 +8,7 @@ const newSeq = new Sequelize(
         host: process.env.DATABASE_HOST,
         dialect: 'mysql',
         port: 3306
-    }
+    },
 );
 
 newSeq.authenticate().then(() => {
@@ -17,6 +17,6 @@ newSeq.authenticate().then(() => {
     console.error('Unable to connect to the database: ', error.message);
 });
 
-export {
+module.exports = {
     newSeq
 };

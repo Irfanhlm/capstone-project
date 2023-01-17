@@ -1,9 +1,9 @@
-import * as dotenv from 'dotenv';
+const dotenv = require('dotenv');
 
 const config = dotenv.config({
     path: '.env'
 });
 
-export {
+module.exports = {
     config
 };
