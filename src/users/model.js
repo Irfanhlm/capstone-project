@@ -18,16 +18,57 @@ const Users = newSeq.define("users", {
     },
     phone: {
         type: DataTypes.STRING(20),
-    }
+    },
 }, {
     paranoid: true //soft-delete, 
 });
 
-newSeq.sync({ alter: true }).then(() => {
-    console.log('Users table created successfully!');
+newSeq.sync().then(() => {
+    console.log('Users table created successfully!~');
 }).catch((error) => {
-    console.error('Unable to create table : ', error);
+    console.error(`Unable to create table: ${error}~`);
 });
 
+const createUser = (async (un, em, pw, ph) => {
+    const create = await Users.create({
+        username: un,
+        email: em,
+        password: pw,
+        phone: ph
+    });
+    console.log(un, "'s id : ", create.id);
+    return create.id;
+});
 
-module.exports = Users;
+const getUsers = (async () => {
+    const dataUser = await Users.findAll();
+    return dataUser;
+});
+
+const getUserbyId = (async (id) => {
+    const dataUser = await Users.findOne({
+        where: {
+            id: id
+        }
+    });
+    return dataUser;
+});
+
+const getUserbyUsername = (async (un) => {
+    const dataUser = await Users.findOne({
+        where: {
+            username: un
+        }
+    });
+    return dataUser;
+});
+
+const deleteUser = ((id) => {
+    Users.destroy({
+        where: {
+            id: id
+        }
+    });
+});
+
+module.exports = { Users, createUser, getUsers, getUserbyId, getUserbyUsername, deleteUser };

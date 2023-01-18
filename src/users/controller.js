@@ -1,55 +1,67 @@
-const { createUser, getUserbyId } = require("./users.model.js");
+const { createUser, getUserbyId, getUsers } = require("./model.js");
 
-const userCreateRest = (async (req, res) => {
-    const { username, password, address, day_of_birth, phone, gender, education } = req.body;
-
-    if (!(username && password && gender && education)) {
+const userCreateAPI = (async (req, res) => {
+    const { username, email, password, phone } = req.body;
+    if (!(username && email && password)) {
         return res.status(400)
             .json({
                 meta: {
                     code: 400,
-                    message: "Some input are required"
+                    message: "Some input are required~"
                 },
                 data: {}
             });
     }
 
-    const respModel = await createUser(username, password, day_of_birth, address, gender, education, phone);
-    return res.status(200)
+    const resModel = await createUser(username, email, password, phone);
+    return res.status(201)
         .json({
             meta: {
                 code: 200,
-                message: "Success add user"
+                message: "Success add user~"
             },
             data: {
-                id: respModel
+                id: resModel
             }
         });
 });
 
-const userGetByIDRest = (async (req, res) => {
-    const { id } = req.query;
+const usersAPI = async (req, res, next) => {
+    try {
+        const resModel = await getUsers();
+        if (!resModel) {
+            return res.status(404).json({ message: 'Id name tidak ditemukan~' });
+        }
+        res.status(200).json({
+            data: resModel,
+        });
+    } catch (err) {
+        next(err);
+    }
+};
 
+const userGetbyIdAPI = (async (req, res) => {
+    const { id } = req.query;
     if (!(id)) {
         return res.status(400)
             .json({
                 meta: {
                     code: 400,
-                    message: "Some input are required"
+                    message: "Some input are required~"
                 },
                 data: {}
             });
     }
 
-    const respModel = await getUserbyId(id);
+    const resModel = await getUserbyId(id);
     return res.status(200)
         .json({
             meta: {
                 code: 200,
-                message: "Success add user"
+                message: "Success add user~"
             },
-            data: respModel
+            data: resModel
         });
 });
 
-module.exports = { userCreateRest, userGetByIDRest };
+module.exports = { userCreateAPI, usersAPI, userGetbyIdAPI };
