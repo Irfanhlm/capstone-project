@@ -7,7 +7,7 @@ const verifyToken = (req, res, next) => {
         return res.status(400).json({
             meta: {
                 code: 400,
-                message: "Missing JWT",
+                message: "Missing JWT~",
             },
             data: {},
         });
@@ -18,11 +18,12 @@ const verifyToken = (req, res, next) => {
 
     try {
         const decoded = JSONtoken.verify(token, process.env.JWT_SECRET);
+        console.log(decoded);
     } catch (error) {
         return res.status(401).json({
             meta: {
                 code: 401,
-                message: "Invalid Token",
+                message: "Invalid Token~",
             },
             data: {},
         });

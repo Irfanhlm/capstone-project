@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express();
-// const { verifyToken } = require("../middleware/auth.js");
+const verifyToken = require("../middleware/auth");
 const {
     userCreateRest,
     userGetbyIdRest,
@@ -11,14 +11,12 @@ const {
 
 router.post("/users", userCreateRest); // Create Users
 
-router.get("/users/:id", userGetbyIdRest); // Get Users by ID
+router.get("/users/:id", verifyToken, userGetbyIdRest); // Get Users by ID
 
-router.get("/users", usersRest); // Get All Users 
+router.get("/users", verifyToken, usersRest); // Get All Users 
 
-router.put("/users/:id", userUpdateRest); // Update Users by ID
+router.put("/users/:id", verifyToken, userUpdateRest); // Update Users by ID
 
-router.delete("/users/:id", userDeleteRest); // Delete Users by ID
-
-// router.get("/users", verifyToken, userGetByIDRest);
+router.delete("/users/:id", verifyToken, userDeleteRest); // Delete Users by ID
 
 module.exports = router;
