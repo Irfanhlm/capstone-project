@@ -1,7 +1,13 @@
 const express = require('express');
 const router = express();
 // import { verifyToken } from "../middleware/auth.js";
-const { userCreateRest, userGetbyIdRest, usersRest, userDeleteRest, userUpdateRest } = require('./controller');
+const {
+    userCreateRest,
+    userGetbyIdRest,
+    usersRest,
+    userDeleteRest,
+    userUpdateRest
+} = require('./controller');
 
 router.post("/users", userCreateRest); // Create Users
 

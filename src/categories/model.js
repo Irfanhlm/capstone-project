@@ -25,10 +25,10 @@ const createCategories = (async (nm) => {
     return create.id;
 });
 
-// const getAllCategories = (async () => {
-//     const dataCategories = await Categories.findAll();
-//     return dataCategories;
-// });
+const getAllCategories = (async () => {
+    const allCategories = await Categories.findAll();
+    return allCategories;
+});
 
 const getCategoriesById = (async (id) => {
     const allCategories = await Categories.findOne({
@@ -40,15 +40,16 @@ const getCategoriesById = (async (id) => {
 });
 
 const updateCategories = async (data, id) => {
-    await Favourites.update(data, {
+    const allCategories = await Categories.update(data, {
         where: {
             id: id,
         },
     });
+    return allCategories;
 };
 
 const deleteCategories = (id) => {
-    Favourites.destroy({
+    Categories.destroy({
         where: {
             id: id,
         },
@@ -58,7 +59,7 @@ const deleteCategories = (id) => {
 module.exports = {
     Categories,
     createCategories,
-    // getAllCategories,
+    getAllCategories,
     getCategoriesById,
     updateCategories,
     deleteCategories

@@ -1,7 +1,7 @@
 require("./configs/env.js");
 const express = require('express');
 const usersRoute = require('./users/router');
-const categoriesRoute = require('./categories/router.categories');
+const categoriesRoute = require('./categories/router');
 
 const app = express();
 

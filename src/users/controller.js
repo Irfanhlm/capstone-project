@@ -1,4 +1,10 @@
-const { createUser, getUsers, Users, deleteUser, updateUser } = require("./model.js");
+const {
+    createUser,
+    getUsers,
+    getUserbyId,
+    deleteUser,
+    updateUser
+} = require("./model.js");
 
 const userCreateRest = (async (req, res) => {
     const { username, email, password, phone } = req.body;
@@ -40,42 +46,10 @@ const usersRest = async (req, res, next) => {
     }
 };
 
-const userGetbyIdRest = async (req, res, next) => {
-    try {
-        const { id } = req.params;
-        const resModel = await Users.findOne({
-            where: {
-                id: id
-            }
-        });
-        if (!(id)) {
-            return res.status(400)
-                .json({
-                    meta: {
-                        code: 400,
-                        message: "Some input are required~"
-                    },
-                    data: {}
-                });
-        }
-        res.status(200)
-            .json({
-                meta: {
-                    code: 200,
-                    message: "Success get user by id~"
-                },
-                data: resModel
-            });
-    } catch (err) {
-        next(err);
-    }
-};
-
-const userUpdateRest = async (req, res) => {
+const userGetbyIdRest = async (req, res) => {
     const { id } = req.params;
-    const { username, email, password, phone } = req.body;
 
-    if (!(id && username && password && email && phone)) {
+    if (!id) {
         return res.status(400).json({
             meta: {
                 code: 400,
@@ -85,14 +59,37 @@ const userUpdateRest = async (req, res) => {
         });
     }
 
-    const respModel = await updateUser(id, username, email, password, phone);
+    const respModel = await getUserbyId(id);
     return res.status(200).json({
         meta: {
             code: 200,
-            message: "Success update user",
+            message: "Success get user",
+        },
+        data: respModel,
+    });
+};
+
+const userUpdateRest = async (req, res) => {
+    const { id } = req.params;
+    const { username, email, password, phone } = req.body;
+    if (!(id && username && password && email && phone)) {
+        return res.status(400).json({
+            meta: {
+                code: 400,
+                message: "Some input are required~",
+            },
+            data: {},
+        });
+    }
+    const resModel = await updateUser({ username, email, password, phone }, id);
+    console.log(resModel);
+    return res.status(200).json({
+        meta: {
+            code: 200,
+            message: "Success update user~",
         },
         data: {
-            id: respModel,
+            id: resModel,
         },
     });
 };
@@ -109,4 +106,10 @@ const userDeleteRest = async (req, res) => {
     });
 };
 
-module.exports = { userCreateRest, usersRest, userGetbyIdRest, userUpdateRest, userDeleteRest };
+module.exports = {
+    userCreateRest,
+    usersRest,
+    userGetbyIdRest,
+    userUpdateRest,
+    userDeleteRest
+};

@@ -7,7 +7,8 @@ const newSeq = new Sequelize(
     {
         host: process.env.DATABASE_HOST,
         dialect: 'mysql',
-        port: 3306
+        port: 3306,
+        logging: console.log
     },
 );
 
