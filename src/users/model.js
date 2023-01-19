@@ -71,11 +71,21 @@ const deleteUser = ((id) => {
     });
 });
 
+const getUserbyUsername = (async (un) => {
+    const allUser = await Users.findOne({
+        where: {
+            username: un
+        }
+    });
+    return allUser;
+});
+
 module.exports = {
     Users,
     createUser,
     getUsers,
     getUserbyId,
     updateUser,
-    deleteUser
+    deleteUser,
+    getUserbyUsername
 };

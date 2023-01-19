@@ -2,6 +2,7 @@ require("./configs/env.js");
 const express = require('express');
 const usersRoute = require('./users/router');
 const categoriesRoute = require('./categories/router');
+const authRoute = require('./auth/auth.router');
 
 const app = express();
 
@@ -12,6 +13,7 @@ const v1 = '/api/v1';
 
 app.use(v1, usersRoute);
 app.use(v1, categoriesRoute);
+app.use(v1, authRoute);
 
 app.listen(process.env.API_PORT, () => {
     console.log(`Express API is listening on port ${process.env.API_PORT}`);

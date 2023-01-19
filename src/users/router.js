@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express();
-// import { verifyToken } from "../middleware/auth.js";
+// const { verifyToken } = require("../middleware/auth.js");
 const {
     userCreateRest,
     userGetbyIdRest,
@@ -11,9 +11,9 @@ const {
 
 router.post("/users", userCreateRest); // Create Users
 
-router.get("/users", usersRest); // Get All Users 
-
 router.get("/users/:id", userGetbyIdRest); // Get Users by ID
+
+router.get("/users", usersRest); // Get All Users 
 
 router.put("/users/:id", userUpdateRest); // Update Users by ID
 
