@@ -45,23 +45,13 @@ const getUsers = (async () => {
     return dataUser;
 });
 
-const getUserbyId = (async (id) => {
-    const dataUser = await Users.findOne({
+const updateUser = async (data, id) => {
+    await Users.update(data, {
         where: {
-            id: id
-        }
+            id: id,
+        },
     });
-    return dataUser;
-});
-
-const getUserbyUsername = (async (un) => {
-    const dataUser = await Users.findOne({
-        where: {
-            username: un
-        }
-    });
-    return dataUser;
-});
+};
 
 const deleteUser = ((id) => {
     Users.destroy({
@@ -71,4 +61,4 @@ const deleteUser = ((id) => {
     });
 });
 
-module.exports = { Users, createUser, getUsers, getUserbyId, getUserbyUsername, deleteUser };
+module.exports = { Users, createUser, getUsers, updateUser, deleteUser };
