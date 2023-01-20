@@ -1,21 +1,21 @@
 const express = require('express');
 const router = express();
 const {
-    eventsCreateRest,
-    eventsAllRest,
-    eventsGetByIdRest,
-    eventsUpdateRest,
-    eventsDeleteRest
+    talentsCreateRest,
+    talentsAllRest,
+    talentsGetByIdRest,
+    talentsUpdateRest,
+    talentsDeleteRest
 } = require('./controller');
 
-router.post("/events", eventsCreateRest); // create events
+router.post("/talents", talentsCreateRest); // create talents
 
-router.get("/events", eventsAllRest); // get all events
+router.get("/talents", talentsAllRest); // get all talents
 
-router.get("/events/:id", eventsGetByIdRest); // get one events by id
+router.get("/talents/:id", talentsGetByIdRest); // get one talents by id
 
-router.put("/events/:id", eventsUpdateRest); // update events
+router.put("/talents/:id", talentsUpdateRest); // update talents
 
-router.delete("/events/:id", eventsDeleteRest); // delete events
+router.delete("/talents/:id", talentsDeleteRest); // delete talents
 
 module.exports = router;

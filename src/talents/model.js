@@ -1,74 +1,55 @@
 const { DataTypes } = require('sequelize');
 const { newSeq } = require("../configs/db.js");
 
-const Events = newSeq.define("events", {
-    title: {
+const Talents = newSeq.define("talents", {
+    name: {
         type: DataTypes.STRING,
         allowNull: false,
         unique: true
-    },
-    date: {
-        type: DataTypes.STRING,
-        allowNull: false,
-    },
-    about: {
-        type: DataTypes.STRING,
-        allowNull: false,
-    },
-    venue: {
-        type: DataTypes.STRING,
-        allowNull: false,
-    },
-    price: {
-        type: DataTypes.STRING(20),
     }
 }, {
     paranoid: true //soft-delete, 
 });
 
 newSeq.sync().then(() => {
-    console.log('Events table created successfully!~');
+    console.log('Talents table created successfully!~');
 }).catch((error) => {
     console.error(`Unable to create table: ${error}~`);
 });
 
-const createEvents = (async (tl, dt, ab, vn, pc) => {
-    const create = await Events.create({
-        title: tl,
-        date: dt,
-        about: ab,
-        venue: vn,
-        price: pc
+const createTalents = (async (nm) => {
+    const create = await Talents.create({
+        name: nm
     });
-    console.log(tl, "'s id : ", create.id);
+    console.log(nm, "'s id : ", create.id);
     return create.id;
 });
 
-const getAllEvents = (async () => {
-    const allEvents = await Events.findAll();
-    return allEvents;
+const getAllTalents = (async () => {
+    const allTalents = await Talents.findAll();
+    return allTalents;
 });
 
-const getEventsById = async (id) => {
-    const allEvents = await Events.findOne({
+const getTalentsById = async (id) => {
+    const allTalents = await Talents.findOne({
         where: {
             id: id,
         },
     });
-    return allEvents;
+    return allTalents;
 };
 
-const updateEvents = async (data, id) => {
-    const allEvents = await Events.update(data, {
+const updateTalents = async (data, id) => {
+    const allTalents = await Talents.update(data, {
         where: {
             id: id,
         },
     });
-    return allEvents;
+    return allTalents;
 };
 
-const deleteEvents = (id) => {
-    Events.destroy({
+const deleteTalents = (id) => {
+    Talents.destroy({
         where: {
             id: id,
         },
@@ -76,11 +57,11 @@ const deleteEvents = (id) => {
 };
 
 module.exports = {
-    Events,
-    createEvents,
-    getAllEvents,
-    getEventsById,
-    updateEvents,
-    deleteEvents
+    Talents,
+    createTalents,
+    getAllTalents,
+    getTalentsById,
+    updateTalents,
+    deleteTalents
 }
 

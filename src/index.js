@@ -5,6 +5,7 @@ const usersRoute = require('./users/router');
 const categoriesRoute = require('./categories/router');
 const eventsRoute = require('./events/router');
 const ordersRoute = require('./orders/router');
+const talentsRoute = require('./talents/router');
 // const imagesRoute = require('./images/router');
 
 const app = express();
@@ -19,6 +20,7 @@ app.use(v1, usersRoute);
 app.use(v1, categoriesRoute);
 app.use(v1, eventsRoute);
 app.use(v1, ordersRoute);
+app.use(v1, talentsRoute);
 // app.use(v1, imagesRoute);
 
 app.listen(process.env.API_PORT, () => {
