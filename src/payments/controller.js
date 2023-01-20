@@ -1,14 +1,14 @@
 const {
-    createImages,
-    getAllImages,
-    getImagesById,
-    updateImages,
-    deleteImages
+    createPayments,
+    getAllPayments,
+    getPaymentsById,
+    updatePayments,
+    deletePayments
 } = require("./model.js");
 
-const imagesCreateRest = (async (req, res) => {
-    const { name } = req.body;
-    if (!name) {
+const paymentsCreateRest = (async (req, res) => {
+    const { name, status } = req.body;
+    if (!name && status) {
         return res.status(400)
             .json({
                 meta: {
@@ -18,12 +18,12 @@ const imagesCreateRest = (async (req, res) => {
                 data: {},
             });
     }
-    const resModel = await createImages(name);
+    const resModel = await createPayments(name, status);
     return res.status(201)
         .json({
             meta: {
                 code: 200,
-                message: "Success add images~",
+                message: "Success add payment~",
             },
             data: {
                 id: resModel,
@@ -31,9 +31,9 @@ const imagesCreateRest = (async (req, res) => {
         });
 });
 
-const imagesAllRest = async (req, res, next) => {
+const paymentsAllRest = async (req, res, next) => {
     try {
-        const resModel = await getAllImages();
+        const resModel = await getAllPayments();
         if (!resModel) {
             return res.status(404).json({ message: 'Id name tidak ditemukan~' });
         }
@@ -45,7 +45,7 @@ const imagesAllRest = async (req, res, next) => {
     }
 };
 
-const imagesGetByIdRest = async (req, res) => {
+const paymentsGetByIdRest = async (req, res) => {
     const { id } = req.params;
     if (!id) {
         return res.status(400).json({
@@ -57,19 +57,19 @@ const imagesGetByIdRest = async (req, res) => {
         });
     }
 
-    const respModel = await getImagesById(id);
+    const respModel = await getPaymentsById(id);
     return res.status(200).json({
         meta: {
             code: 200,
-            message: "Success get images~",
+            message: "Success get payment~",
         },
         data: respModel,
     });
 };
 
-const imagesUpdateRest = async (req, res) => {
+const paymentsUpdateRest = async (req, res) => {
     const { id } = req.params;
-    const { name } = req.body;
+    const { name, status } = req.body;
     if (!(id && name)) {
         return res.status(400).json({
             meta: {
@@ -79,12 +79,12 @@ const imagesUpdateRest = async (req, res) => {
             data: {},
         });
     }
-    const resModel = await updateImages({ name }, id);
+    const resModel = await updatePayments({ name, status }, id);
     console.log(resModel);
     return res.status(200).json({
         meta: {
             code: 200,
-            message: "Success update images~",
+            message: "Success update payment~",
         },
         data: {
             id: resModel,
@@ -92,22 +92,22 @@ const imagesUpdateRest = async (req, res) => {
     });
 };
 
-const imagesDeleteRest = async (req, res) => {
+const paymentsDeleteRest = async (req, res) => {
     const { id } = req.params;
-    const respModel = await deleteImages(id);
+    const respModel = await deletePayments(id);
     return res.status(200).json({
         meta: {
             code: 200,
-            message: "Success delete images~",
+            message: "Success delete payment~",
         },
         data: respModel,
     });
 };
 
 module.exports = {
-    imagesCreateRest,
-    imagesAllRest,
-    imagesGetByIdRest,
-    imagesUpdateRest,
-    imagesDeleteRest
+    paymentsCreateRest,
+    paymentsAllRest,
+    paymentsGetByIdRest,
+    paymentsUpdateRest,
+    paymentsDeleteRest
 };
