@@ -1,86 +1,62 @@
 const { DataTypes } = require('sequelize');
 const { newSeq } = require("../configs/db.js");
 
-const Events = newSeq.define("events", {
-    title: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        unique: true
-    },
+const Orders = newSeq.define("orders", {
     date: {
         type: DataTypes.STRING,
         allowNull: false,
     },
-    about: {
+    status: {
         type: DataTypes.STRING,
         allowNull: false,
     },
-    venue: {
-        type: DataTypes.STRING,
+    quantity: {
+        type: DataTypes.INTEGER(10),
         allowNull: false,
     },
-    price: {
+    total_pay: {
         type: DataTypes.STRING(20),
+        allowNull: false,
     }
 }, {
     paranoid: true //soft-delete, 
 });
 
 newSeq.sync().then(() => {
-    console.log('Events table created successfully!~');
+    console.log('Orders table created successfully!~');
 }).catch((error) => {
     console.error(`Unable to create table: ${error}~`);
 });
 
-const createEvents = (async (tl, dt, ab, vn, pc) => {
-    const create = await Events.create({
-        title: tl,
+const createOrders = (async (dt, st, qt, tp) => {
+    const create = await Orders.create({
         date: dt,
-        about: ab,
-        venue: vn,
-        price: pc
+        status: st,
+        quantity: qt,
+        total_pay: tp
     });
-    console.log(tl, "'s id : ", create.id);
+    console.log(dt, "'s id : ", create.id);
     return create.id;
 });
 
-const getAllEvents = (async () => {
-    const allEvents = await Events.findAll();
-    return allEvents;
+const getAllOrders = (async () => {
+    const allOrders = await Orders.findAll();
+    return allOrders;
 });
 
-const getEventsById = async (id) => {
-    const allEvents = await Events.findOne({
+const getOrdersById = async (id) => {
+    const allOrders = await Orders.findOne({
         where: {
             id: id,
         },
     });
-    return allEvents;
-};
-
-const updateEvents = async (data, id) => {
-    const allEvents = await Events.update(data, {
-        where: {
-            id: id,
-        },
-    });
-    return allEvents;
-};
-
-const deleteEvents = (id) => {
-    Events.destroy({
-        where: {
-            id: id,
-        },
-    });
+    return allOrders;
 };
 
 module.exports = {
-    Events,
-    createEvents,
-    getAllEvents,
-    getEventsById,
-    updateEvents,
-    deleteEvents
+    Orders,
+    createOrders,
+    getAllOrders,
+    getOrdersById
 }
 
