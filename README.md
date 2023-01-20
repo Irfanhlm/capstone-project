@@ -48,4 +48,4 @@ $ npm i mysql2
 -create a database configuration in the config folder, we name the file db.js.
 
 ## ERD
-![event-erd](erd-events/erd-events.jpg)
+![event-erd](src/erd-events/erd-events.jpg)
