@@ -8,7 +8,7 @@
   <p align="center">
     Event Application
     <br />
-    <a href="https://app.swaggerhub.com/home"><strong>» Open API »</strong></a>
+    <a href="https://app.swaggerhub.com/apis-docs/IRFANHALIMHIDAYAT_1/thrive-alta/1.0.0"><strong>» Open API »</strong></a>
     <br />
   </p>
 </div>
