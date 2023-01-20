@@ -43,6 +43,4 @@ $ npm i sequelize
 ```go
 $ npm i mysql2
 ```
-```go
-buat file .env di directory/folder yang sama dengan file entry point project kita(index.js) dan assign data yang sifatnya sensitif (port, username, password mysql, host dan nama database)
-```
+- Create an .env file in the same directory/folder as our project's entry point file (index.js) and assign sensitive data (port, username, mysql password, host and database name)
