@@ -27,10 +27,10 @@ export DATABASE_NAME=<name-db>
 $ npm start
 $ npm run dev
 ```
-- Install package
+- Install Express
 ```go
-install express
 $ npm i express
+```
 install dotenv
 $ npm i dotenv
 install sequelize
