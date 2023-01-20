@@ -44,3 +44,8 @@ $ npm i sequelize
 $ npm i mysql2
 ```
 - Create an .env file in the same directory/folder as our project's entry point file (index.js) and assign sensitive data (port, username, mysql password, host and database name)
+
+-create a database configuration in the config folder, we name the file db.js.
+
+## ERD
+![event-erd](erd-events/erd-events.png)
