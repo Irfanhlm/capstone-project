@@ -1,54 +1,74 @@
 const { DataTypes } = require('sequelize');
 const { newSeq } = require("../configs/db.js");
 
-const Categories = newSeq.define("categories", {
-    name: {
+const Events = newSeq.define("events", {
+    title: {
         type: DataTypes.STRING,
         allowNull: false,
         unique: true
     },
+    date: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
+    about: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
+    venue: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
+    price: {
+        type: DataTypes.STRING(20),
+    }
 }, {
     paranoid: true //soft-delete, 
 });
 
 newSeq.sync().then(() => {
-    console.log('Categories table created successfully!~');
+    console.log('Events table created successfully!~');
 }).catch((error) => {
     console.error(`Unable to create table: ${error}~`);
 });
 
-const createCategories = (async (nm) => {
-    const create = await Categories.create({
-        name: nm
+const createEvents = (async (tl, dt, ab, vn, pc) => {
+    const create = await Events.create({
+        title: tl,
+        date: dt,
+        about: ab,
+        venue: vn,
+        price: pc
     });
-    console.log(nm, "'s id : ", create.id);
+    console.log(tl, "'s id : ", create.id);
     return create.id;
 });
 
-// const getAllCategories = (async () => {
-//     const dataCategories = await Categories.findAll();
-//     return dataCategories;
-// });
-
-const getCategoriesById = (async (id) => {
-    const allCategories = await Categories.findOne({
-        where: {
-            id: id,
-        },
-    });
-    return allCategories;
+const getAllEvents = (async () => {
+    const allEvents = await Events.findAll();
+    return allEvents;
 });
 
-const updateCategories = async (data, id) => {
-    await Favourites.update(data, {
+const getEventsById = async (id) => {
+    const allEvents = await Events.findOne({
         where: {
             id: id,
         },
     });
+    return allEvents;
 };
 
-const deleteCategories = (id) => {
-    Favourites.destroy({
+const updateEvents = async (data, id) => {
+    const allEvents = await Events.update(data, {
+        where: {
+            id: id,
+        },
+    });
+    return allEvents;
+};
+
+const deleteEvents = (id) => {
+    Events.destroy({
         where: {
             id: id,
         },
@@ -56,11 +76,11 @@ const deleteCategories = (id) => {
 };
 
 module.exports = {
-    Categories,
-    createCategories,
-    // getAllCategories,
-    getCategoriesById,
-    updateCategories,
-    deleteCategories
+    Events,
+    createEvents,
+    getAllEvents,
+    getEventsById,
+    updateEvents,
+    deleteEvents
 }
 

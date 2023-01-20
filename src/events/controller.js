@@ -1,8 +1,14 @@
-const { createCategories, Categories } = require("./model.categories.js");
+const {
+    createEvents,
+    getAllEvents,
+    getEventsById,
+    updateEvents,
+    deleteEvents
+} = require("./model.js");
 
-const categoriesCreateRest = (async (req, res) => {
-    const { name } = req.body;
-    if (!name) {
+const eventsCreateRest = (async (req, res) => {
+    const { title, date, about, venue, price } = req.body;
+    if (!title && date && about && venue) {
         return res.status(400)
             .json({
                 meta: {
@@ -12,12 +18,12 @@ const categoriesCreateRest = (async (req, res) => {
                 data: {},
             });
     }
-    const resModel = await createCategories(name);
+    const resModel = await createEvents(title, date, about, venue, price);
     return res.status(201)
         .json({
             meta: {
                 code: 200,
-                message: "Success add categories~",
+                message: "Success add events~",
             },
             data: {
                 id: resModel,
@@ -25,119 +31,83 @@ const categoriesCreateRest = (async (req, res) => {
         });
 });
 
-// const categoriesAllRest = async (req, res, next) => {
-//     try {
-//         const respModel = await getAllCategories();
-//         if (!respModel) {
-//             return res.status(404).json({ message: 'Id name tidak ditemukan~' });
-//         }
-//         return res.status(200).json({
-//             data: resModel,
-//         });
-//     } catch (err) {
-//         next(err);
-//     }
-// };
-
-const categoriesGetByIdRest = async (req, res) => {
-    const { id } = req.query;
-    if (!id) {
-        return res.status(400).json({
-            meta: {
-                code: 400,
-                message: "Some input are required",
-            },
-            data: {},
-        });
-    }
-
-    const respModel = await getCategoriesById(id);
-    return res.status(200).json({
-        meta: {
-            code: 200,
-            message: "Success get categories",
-        },
-        data: respModel,
-    });
-};
-
-const index = async (req, res, next) => {
+const eventsAllRest = async (req, res, next) => {
     try {
-        const result = await Categories.findAll();
-        if (!result) {
+        const resModel = await getAllEvents();
+        if (!resModel) {
             return res.status(404).json({ message: 'Id name tidak ditemukan~' });
         }
-        res.status(200).json({
-            data: result,
+        return res.status(200).json({
+            data: resModel,
         });
     } catch (err) {
         next(err);
     }
 };
 
-// const find = async (req, res, next) => {
-//     try {
-//         const { id } = req.params;
-//         const result = await Categories.findOne({
-//             where: {
-//                 id: id
-//             }
-//         });
-//         if (!result) {
-//             return res.status(404).json({ message: 'Id categories tidak ditemukan~' });
-//         }
-//         res.status(200).json({
-//             data: result,
-//         });
-//     } catch (err) {
-//         next(err);
-//     }
-// };
-
-const categoriesUpdateRest = async (req, res) => {
+const eventsGetByIdRest = async (req, res) => {
     const { id } = req.params;
-    const { name } = req.body;
-
-    if (!(id && name)) {
+    if (!id) {
         return res.status(400).json({
             meta: {
                 code: 400,
-                message: "Some input are required",
+                message: "Some input are required~",
             },
             data: {},
         });
     }
 
-    const respModel = await updateCategories(id, name);
+    const respModel = await getEventsById(id);
     return res.status(200).json({
         meta: {
             code: 200,
-            message: "Success update categories~",
+            message: "Success get events by ID~",
+        },
+        data: respModel,
+    });
+};
+
+const eventsUpdateRest = async (req, res) => {
+    const { id } = req.params;
+    const { title, date, about, venue, price } = req.body;
+    if (!(id && title && date && about && venue)) {
+        return res.status(400).json({
+            meta: {
+                code: 400,
+                message: "Some input are required~",
+            },
+            data: {},
+        });
+    }
+    const resModel = await updateEvents({ title, date, about, venue, price }, id);
+    console.log(resModel);
+    return res.status(200).json({
+        meta: {
+            code: 200,
+            message: "Success update events~",
         },
         data: {
-            id: respModel,
+            id: resModel,
         },
     });
 };
 
-const categoriesDeleteRest = async (req, res) => {
+const eventsDeleteRest = async (req, res) => {
     const { id } = req.params;
-    const respModel = await deleteCategories(id);
+    const respModel = await deleteEvents(id);
     return res.status(200).json({
         meta: {
             code: 200,
-            message: "Success delete categories~",
+            message: "Success delete events~",
         },
         data: respModel,
     });
 };
 
 module.exports = {
-    index,
-    // find,
-    categoriesCreateRest,
-    // categoriesAllRest,
-    categoriesGetByIdRest,
-    categoriesUpdateRest,
-    categoriesDeleteRest
+    eventsCreateRest,
+    eventsAllRest,
+    eventsGetByIdRest,
+    eventsUpdateRest,
+    eventsDeleteRest
 };

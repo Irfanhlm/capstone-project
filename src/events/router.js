@@ -1,16 +1,21 @@
 const express = require('express');
 const router = express();
-const { categoriesCreateRest, categoriesAllRest, categoriesGetByIdRest, categoriesUpdateRest, categoriesDeleteRest, index } = require('./controller.categories');
+const {
+    eventsCreateRest,
+    eventsAllRest,
+    eventsGetByIdRest,
+    eventsUpdateRest,
+    eventsDeleteRest
+} = require('./controller');
 
-router.post('/categories', categoriesCreateRest); // create category
+router.post("/events", eventsCreateRest); // create events
 
-// router.get('/categories', categoriesAllRest); // get all categories
-router.get('/categories', index); // get all categories
+router.get("/events", eventsAllRest); // get all events
 
-router.get('/categories/:id', categoriesGetByIdRest); // get one category by id
+router.get("/events/:id", eventsGetByIdRest); // get one events by id
 
-router.put('/categories/:id', categoriesUpdateRest); // update category
+router.put("/events/:id", eventsUpdateRest); // update events
 
-router.delete('/categories/:id', categoriesDeleteRest); // delete category
+router.delete("/events/:id", eventsDeleteRest); // delete events
 
 module.exports = router;
