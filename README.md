@@ -27,13 +27,19 @@ export DATABASE_NAME=<name-db>
 $ npm start
 $ npm run dev
 ```
-- Install Express
+- Install Express Package
 ```go
 $ npm i express
 ```
-install dotenv
+- Install dotenv Package
+```go
 $ npm i dotenv
-install sequelize
+```
+- Install Sequelize Package
+```go
 $ npm i sequelize
-install mysql2
+```
+- Install mysql2 Package
+```go
 $ npm i mysql2
+```
