@@ -21,6 +21,20 @@ const Events = newSeq.define("events", {
     },
     price: {
         type: DataTypes.STRING(20),
+    },
+    category_id: {
+        type: DataTypes.INTEGER,
+        references: {
+            model: "users",
+            key: "id"
+        }
+    },
+    talent_id: {
+        type: DataTypes.INTEGER,
+        references: {
+            model: "talents",
+            key: "id"
+        }
     }
 }, {
     paranoid: true //soft-delete, 

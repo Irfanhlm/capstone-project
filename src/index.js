@@ -7,6 +7,7 @@ const eventsRoute = require('./events/router');
 const ordersRoute = require('./orders/router');
 const talentsRoute = require('./talents/router');
 // const imagesRoute = require('./images/router');
+// const paymentsRoute = require('./payments/router');
 
 const app = express();
 
@@ -22,6 +23,7 @@ app.use(v1, eventsRoute);
 app.use(v1, ordersRoute);
 app.use(v1, talentsRoute);
 // app.use(v1, imagesRoute);
+// app.use(v1, paymentsRoute);
 
 app.listen(process.env.API_PORT, () => {
     console.log(`Express API is listening on port ${process.env.API_PORT}`);

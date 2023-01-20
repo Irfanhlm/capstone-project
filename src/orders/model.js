@@ -17,6 +17,20 @@ const Orders = newSeq.define("orders", {
     total_pay: {
         type: DataTypes.STRING(20),
         allowNull: false,
+    },
+    event_id: {
+        type: DataTypes.INTEGER,
+        references: {
+            model: "events",
+            key: "id"
+        }
+    },
+    user_id: {
+        type: DataTypes.INTEGER,
+        references: {
+            model: "users",
+            key: "id"
+        }
     }
 }, {
     paranoid: true //soft-delete, 
