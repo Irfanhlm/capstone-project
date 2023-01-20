@@ -22,8 +22,6 @@ export DATABASE_PASSWORD=<password-db>
 export DATABASE_HOST=<host-db>
 export DATABASE_NAME=<name-db>
 ```
-
-```
 - Run project
 ```go
 $ npm start
